@@ -28,8 +28,6 @@ app.use(passport.session());
 
 
 // connect to DataBase
-mongoose.set('strictQuery', false);
-mongoose.connect("mongodb://127.0.0.1:27017/userDB", {useNewUrlParser: true});
 
 
 // Database schema
@@ -79,7 +77,6 @@ app.get("/", function(req, res){
 app.get("/login", function(req, res){
   res.render("login");
 });
-
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
@@ -182,6 +179,16 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.listen(3000, function(req, res){
-  console.log("Server started on port 3000");
-});
+
+mongoose.set('strictQuery', false);
+mongoose.
+connect("mongodb+srv://adekunle22taiwo:habeeb123@cluster0.polwncw.mongodb.net/Node-API?retryWrites=true&w=majority")
+.then(() => {
+    console.log("connected to mongoDB")
+    app.listen(3000, () => {
+        console.log("Node API is running on port 3000");
+    })
+
+}).catch(() => {
+    console.log(error)
+})
